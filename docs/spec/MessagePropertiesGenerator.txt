@@ -1,0 +1,67 @@
+===========================================================
+Message Properties Generator
+===========================================================
+
+Overview
+===========================================================
+The purpose of this tool is to simplify the process of 
+internationalisation of Java applcations which use message properties.
+This is done by creating centralized place to store all translations
+for each resource key and each message properties file.
+For maximum ease of use to the user, the centralized storage will be
+an excel file.
+
+Application Environment
+===========================================================
+The application will be used from two places:
+	- a console
+	- through an ant task
+	
+When it's run as a console application the user should choose
+between TO_PROPERTIES and TO_EXCEL run mode.
+When it's run as an ant task the only supported mode must be TO_PROPERTIES.
+
+Input Parameters
+===========================================================
+The supported input parameters must be:
+	- Mode - (TO_PROPERTIES (default) | TO_EXCEL)
+	- Excel file path
+	- Message properties directory
+	- Target Encoding (optional, default UTF-8. This will be added later if we have time)
+	
+Output
+===========================================================
+The output depends on the mode parameter as:
+	* If the mode is TO_EXCEL the output will be a single excel file, which contains
+worksheet for each .properties group, and in each worksheet contains data for each translation.
+	* If the mode is TO_PROPERTIES the output is a group of .properties files
+one file for each language supported in the excel file.
+
+Excel Structure
+===========================================================
+Let's have this file structure:
+	/i18n/Messages.properties
+	/i18n/Messages_en.properties
+	/i18n/Messages_fr.properties
+	/i18n/Messages_Model_en.properties
+	/i18n/Messages_Model_es.properties
+	/i18n/Messages_Model_fr.properties
+
+The the generated Excel file should have the following structure:
+	- It should contain two worksheets named: Messages and Messages_Model
+	- The Messages worksheet should have these columns: Key, Default, EN, FR
+	- The Messages_Model worksheet should have these columns: Key, EN, ES, FR
+	- Each worksheet should contain all message keys, from all files of it's group, sorted by name
+Note the following:
+	- We don't force consistency over the different file groups
+		(we don't have Messages_es.properties but we have Messages_Model_es.properties)
+	- The translations columns are sorted by language name,
+		except the Default language which must always be first if exits
+
+Message Properties Generation
+===========================================================
+Having an excel file with the structure describe the tool should
+generate group of message properties by:
+	- having one file for each language of a worksheet with the proper naming.
+	- in each file are included only the keys for which we have translation
+	- if exists the Default language should contain all posible keys (even if there is not translation for them)

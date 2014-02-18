@@ -1,0 +1,16 @@
+	<target name ="generate_i18n" depends="compile" description="Generates all message files and then modifies and copies messages.js files">
+		<echo level="info">== Started generating message(i18n) files</echo>
+		<java classname="${classGeneratingAllMessages}">
+			<classpath>
+				<path location="${target.dir}"/>
+				<path>
+					<fileset dir="lib/compile" includes="poi.jar, poi-ooxml.jar" />
+				</path>
+			</classpath>
+		</java>
+		<echo level="info">== Finished generating message(i18n) files</echo>
+
+		<echo level="info">== Started setting the JavaScript message(i18n) files</echo>
+		<java classpath="${target.dir}" classname="${classGeneratingJsMessages}"/>
+		<echo level="info">== Finished setting the JavaScript message(i18n) files</echo>
+	</target>

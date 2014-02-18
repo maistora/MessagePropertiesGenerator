@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="to_properties" name="cache mgr ui">
+
+	<!-- Convert excel file to properties -->
+	<target name="to_properties">
+		<java jar="lib/compile/mpg.jar" fork="true">
+			<arg line="${lang.new.properties.dir} ${lang.excel.file}" />
+		</java>
+	</target>
+	
+	<!-- Convert properties files to excel -->
+	<target name="to_excel">
+		<java jar="lib/compile/mpg.jar" fork="true">
+			<arg line="to_excel ${lang.properties.dir} ${lang.excel.file}"/>
+		</java>
+	</target>
+</project>

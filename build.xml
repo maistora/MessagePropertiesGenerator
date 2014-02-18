@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="jar" name="MPG">
+	<description>
+		Message Properties Generator
+	</description>
+
+	<property file="build.properties" />
+	           
+	<fileset dir="${lib.dir}" id="lib" excludes="junit.jar">
+		<filename name="poi.jar" />
+	</fileset>
+	
+	<path id="classpath">
+		<fileset refid="lib" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${target.dir}" />
+		<delete dir="${jar.dir}" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${target.dir}/libs" />
+
+		<copy todir="${target.dir}/libs">
+			<fileset refid="lib" />
+		</copy>
+		
+		<javac srcdir="${src.dir}" destdir="${target.dir}">
+			<classpath>
+				<path refid="classpath" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${jar.name}" basedir="${target.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="com.maistora.tool.mpg.MpgLauncher" />
+			</manifest>
+		</jar>
+	</target>
+
+</project>
